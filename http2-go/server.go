@@ -3,9 +3,10 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"go/token"
+	"go/types"
 	"log"
 	"net/http"
-	"strings"
 
 	"github.com/posener/h2conn"
 )
@@ -51,8 +52,12 @@ func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 		log.Printf("Got: %q", msg)
 
-		msg = strings.ToUpper(msg)
-
+		result, err := types.Eval(token.NewFileSet(), nil, token.NoPos, msg)
+		if err != nil {
+			msg = fmt.Sprintf("Failed eval: '%v'", err)
+		} else {
+			msg = result.Value.String()
+		}
 		err = out.Encode(msg)
 		if err != nil {
 			log.Printf("Failed encoding response: %v", err)

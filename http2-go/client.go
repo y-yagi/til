@@ -55,7 +55,7 @@ func main() {
 	defer log.Println("Exited")
 
 	// Loop until user terminates
-	fmt.Println("Echo session starts, press ctrl-C to terminate.")
+	fmt.Println("Eval session starts, press ctrl-C to terminate.")
 	for ctx.Err() == nil {
 
 		// Ask the user to give a message to send to the server
