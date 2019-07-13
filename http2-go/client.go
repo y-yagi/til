@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/http/httptrace"
 	"os"
 	"os/signal"
 	"strings"
@@ -23,6 +24,17 @@ func main() {
 	defer cancel()
 
 	go catchSignal(cancel)
+
+	trace := &httptrace.ClientTrace{
+		DNSStart:             func(_ httptrace.DNSStartInfo) { traceLog("DNSStart") },
+		DNSDone:              func(_ httptrace.DNSDoneInfo) { traceLog("DNSDone") },
+		ConnectStart:         func(_, _ string) { traceLog("ConnectStart") },
+		GotConn:              func(_ httptrace.GotConnInfo) { traceLog("GetConn") },
+		GotFirstResponseByte: func() { traceLog("GotFirstResponseByte") },
+		TLSHandshakeStart:    func() { traceLog("TLSHandshakeStart") },
+		TLSHandshakeDone:     func(_ tls.ConnectionState, _ error) { traceLog("TLSHandshakeDone") },
+	}
+	ctx = httptrace.WithClientTrace(ctx, trace)
 
 	// We use a client with custom http2.Transport since the server certificate is not signed by
 	// an authorized CA, and this is the way to ignore certificate verification errors.
@@ -55,7 +67,7 @@ func main() {
 	defer log.Println("Exited")
 
 	// Loop until user terminates
-	fmt.Println("Eval session starts, press ctrl-C to terminate.")
+	fmt.Println("Session starts, press ctrl-C to terminate.")
 	for ctx.Err() == nil {
 
 		// Ask the user to give a message to send to the server
@@ -89,4 +101,8 @@ func catchSignal(cancel context.CancelFunc) {
 	<-sig
 	log.Println("Cancelling due to interrupt")
 	cancel()
+}
+
+func traceLog(event string) {
+	fmt.Printf("Start: %v\n", event)
 }
