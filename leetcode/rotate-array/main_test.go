@@ -11,6 +11,7 @@ var tests = []struct {
 	want []int
 }{
 	{[]int{1, 2, 3, 4, 5, 6, 7}, 3, []int{5, 6, 7, 1, 2, 3, 4}},
+	{[]int{-1}, 2, []int{-1}},
 }
 
 func TestIsValid(t *testing.T) {
