@@ -27,6 +27,10 @@ type betweenStation struct {
 	RequiredTime int64
 }
 
+type vertex struct {
+	Name string
+}
+
 var (
 	stations []station
 	betweens []betweenStation
