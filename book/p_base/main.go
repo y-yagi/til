@@ -27,12 +27,16 @@ type betweenStation struct {
 	RequiredTime int64
 }
 
+var (
+	stations []station
+	betweens []betweenStation
+)
+
 func (s *betweenStation) display() string {
 	return fmt.Sprintf("%s - %s (%s)", s.Start, s.End, s.Stopover)
 }
 
-func main() {
-	var stations []station
+func init() {
 	r, err := ioutil.ReadFile("stations.csv")
 	if err != nil {
 		log.Fatal(err)
@@ -41,11 +45,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	for _, s := range stations {
-		fmt.Printf("%+v\n", s.display())
-	}
-
-	var betweens []betweenStation
 	r, err = ioutil.ReadFile("betweens.csv")
 	if err != nil {
 		log.Fatal(err)
@@ -53,8 +52,7 @@ func main() {
 	if err := csvutil.Unmarshal(r, &betweens); err != nil {
 		log.Fatal(err)
 	}
+}
 
-	for _, b := range betweens {
-		fmt.Printf("%+v\n", b.display())
-	}
+func main() {
 }
