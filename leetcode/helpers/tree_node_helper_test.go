@@ -13,8 +13,14 @@ var tests = []struct {
 
 func TestSuccess(t *testing.T) {
 	for _, tt := range tests {
-		got := buildTreeNode(tt.in)
+		got := buildTree(tt.in)
 		if got == nil || got.Val != 4 {
+			t.Fatalf("in %v, got %v, want %v", tt.in, got, tt.want)
+		}
+		if got.Left == nil || got.Left.Val != 2 {
+			t.Fatalf("in %v, got %v, want %v", tt.in, got, tt.want)
+		}
+		if got.Right != nil {
 			t.Fatalf("in %v, got %v, want %v", tt.in, got, tt.want)
 		}
 	}
