@@ -1,33 +1,45 @@
 package main
 
+import "fmt"
+
+func d(a ...interface{}) {
+	format := ""
+	for _, _ = range a {
+		format += "%v, "
+	}
+	format += "\n"
+	fmt.Printf(format, a...)
+}
+
 func shipWithinDays(weights []int, D int) int {
-	var left, right int
+	var low, high int
 	for _, w := range weights {
-		left = max(left, w)
-		right += w
+		low = max(low, w)
+		high += w
 	}
 
-	for left < right {
-		mid := (left + right) / 2
-		need := 1
-		cur := 0
+	for low < high {
+		mid := (low + high) / 2
+		total := 0
+		days := 1
 
 		for _, w := range weights {
-			if cur+w > mid {
-				need += 1
-				cur = 0
+			if total+w > mid {
+				days += 1
+				total = w
+			} else {
+				total += w
 			}
-			cur += w
 		}
 
-		if need > D {
-			left = mid + 1
+		if days <= D {
+			high = mid
 		} else {
-			right = mid
+			low = mid + 1
 		}
 	}
 
-	return left
+	return low
 }
 
 func max(x, y int) int {
