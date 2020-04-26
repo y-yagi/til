@@ -6,7 +6,8 @@ var tests = []struct {
 	in  string
 	out string
 }{
-	// {"babad", "bab"},
+	{"babad", "aba"},
+	{"caba", "aba"},
 	{"cbbd", "bb"},
 	{"a", "a"},
 	{"ac", "a"},

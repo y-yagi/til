@@ -2,66 +2,51 @@ package main
 
 import "fmt"
 
+func d(a ...interface{}) {
+	format := ""
+	for _, _ = range a {
+		format += "%v, "
+	}
+	format += "\n"
+	fmt.Printf(format, a...)
+}
+
 func longestPalindrome(s string) string {
-	var answer, tmp string
+	if len(s) == 0 {
+		return ""
+	}
+
+	paindromes := []string{string(s[0])}
 
 	for i := 0; i < len(s); i++ {
-		index := string(s[i])
-		if len(tmp) == 0 {
-			tmp += index
-			continue
-		}
-
-		if string(tmp[0]) == index {
-			fmt.Printf("%s\n", tmp)
-			tmp += index
-			for j := 0; j < len(tmp); j++ {
-				if string(tmp[j]) != string(s[i-j]) {
-					break
-				}
+		for j := i - 1; j >= 0; j-- {
+			if paindrome(s[j : i+1]) {
+				paindromes = append(paindromes, s[j:i+1])
 			}
-			answer += tmp
-		} else {
-			tmp += index
 		}
+	}
+
+	answer := ""
+	for _, paindrome := range paindromes {
+		answer = max(answer, paindrome)
 	}
 
 	return answer
 }
 
-// func longestPalindrome(s string) string {
-// 	if len(s) == 1 {
-// 		return s
-// 	} else if len(s) == 2 {
-// 		if string(s[0]) == string(s[1]) {
-// 			return string(s)
-// 		} else {
-// 			return string(s[0])
-// 		}
-// 	}
-//
-// 	palindromes := []string{}
-// 	answer := ""
-//
-// 	for i := 0; i < len(s); i++ {
-// 		for j, y := len(s[:i]), 0; j > 0; j, y = j-1, y+1 {
-// 			if s[j] == s[y] {
-// 				if j > y {
-// 					palindromes = append(palindromes, s[y:j+1])
-// 				} else if j == y {
-// 					palindromes = append(palindromes, s[y:j+2])
-// 				} else {
-// 					palindromes = append(palindromes, s[j:y+1])
-// 				}
-// 			}
-// 		}
-// 	}
-//
-// 	for _, p := range palindromes {
-// 		if len(p) > len(answer) {
-// 			answer = p
-// 		}
-// 	}
-//
-// 	return answer
-// }
+func max(x, y string) string {
+	if len(x) > len(y) {
+		return x
+	}
+
+	return y
+}
+
+func paindrome(s string) bool {
+	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+		if s[i] != s[j] {
+			return false
+		}
+	}
+	return true
+}
