@@ -10,7 +10,7 @@ var tests = []struct {
 	{"caba", "aba"},
 	{"cbbd", "bb"},
 	{"a", "a"},
-	{"ac", "a"},
+	{"ac", "c"},
 	{"bb", "bb"},
 	{"abb", "bb"},
 }

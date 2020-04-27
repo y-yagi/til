@@ -1,52 +1,37 @@
 package main
 
-import "fmt"
-
-func d(a ...interface{}) {
-	format := ""
-	for _, _ = range a {
-		format += "%v, "
-	}
-	format += "\n"
-	fmt.Printf(format, a...)
-}
-
 func longestPalindrome(s string) string {
 	if len(s) == 0 {
 		return ""
 	}
 
-	paindromes := []string{string(s[0])}
-
+	var start, end int
 	for i := 0; i < len(s); i++ {
-		for j := i - 1; j >= 0; j-- {
-			if paindrome(s[j : i+1]) {
-				paindromes = append(paindromes, s[j:i+1])
-			}
+		l1 := expandAroundCenter(s, i, i)
+		l2 := expandAroundCenter(s, i, i+1)
+		l := max(l1, l2)
+		if l > end-start {
+			start = i - (l-1)/2
+			end = i + l/2
 		}
 	}
 
-	answer := ""
-	for _, paindrome := range paindromes {
-		answer = max(answer, paindrome)
-	}
-
-	return answer
+	return s[start : end+1]
 }
 
-func max(x, y string) string {
-	if len(x) > len(y) {
+func expandAroundCenter(s string, l, r int) int {
+	for l >= 0 && r < len(s) && s[l] == s[r] {
+		l--
+		r++
+	}
+
+	return r - l - 1
+}
+
+func max(x, y int) int {
+	if x > y {
 		return x
 	}
 
 	return y
-}
-
-func paindrome(s string) bool {
-	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
-		if s[i] != s[j] {
-			return false
-		}
-	}
-	return true
 }
