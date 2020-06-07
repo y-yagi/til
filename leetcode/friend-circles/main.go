@@ -1,36 +1,22 @@
 package main
 
 func findCircleNum(M [][]int) int {
-	friends := make([]int, len(M))
-	for i := range friends {
-		friends[i] = i
-	}
+	visited := make([]int, len(M))
+	count := 0
 	for i := 0; i < len(M); i++ {
-		for j := i + 1; j < len(M); j++ {
-			if M[i][j] == 1 {
-				union(i, j, friends)
-			}
+		if visited[i] == 0 {
+			dfs(M, visited, i)
+			count++
 		}
 	}
-	m := map[int]interface{}{}
-	for _, v := range friends {
-		m[find(v, friends)] = nil
-	}
-	return len(m)
+	return count
 }
 
-func union(i, j int, friends []int) {
-	fi, fj := find(i, friends), find(j, friends)
-	if fi > fj {
-		friends[fi] = fj
-	} else if fi < fj {
-		friends[fj] = fi
+func dfs(M [][]int, visited []int, i int) {
+	for j := 0; j < len(M); j++ {
+		if M[i][j] == 1 && visited[j] == 0 {
+			visited[j] = 1
+			dfs(M, visited, j)
+		}
 	}
-}
-
-func find(i int, friends []int) int {
-	for friends[i] != i {
-		friends[i], i = friends[friends[i]], friends[i]
-	}
-	return i
 }
