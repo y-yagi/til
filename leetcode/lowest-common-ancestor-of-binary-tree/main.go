@@ -6,34 +6,25 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-var ans *TreeNode
-
 func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
-	recuseTree(root, p, q)
-	return root
-}
-
-func recuseTree(current, p, q *TreeNode) bool {
-	if current == nil {
-		return false
+	if root == nil || root == p || root == q {
+		return root
 	}
 
-	var left, right, mid int
-	if recuseTree(current.Left, p, q) {
-		left = 1
+	left := lowestCommonAncestor(root.Left, p, q)
+	right := lowestCommonAncestor(root.Right, p, q)
+
+	if left == nil && right == nil {
+		return nil
 	}
 
-	if recuseTree(current.Right, p, q) {
-		right = 1
+	if left != nil && right != nil {
+		return root
 	}
 
-	if current == p || current == q {
-		mid = 1
+	if left == nil {
+		return right
 	}
 
-	if mid+left+right >= 2 {
-		ans = current
-	}
-
-	return (mid+left+right > 0)
+	return left
 }
