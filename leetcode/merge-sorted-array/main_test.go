@@ -12,10 +12,11 @@ var tests = []struct {
 	in4  int
 	want []int
 }{
+	{[]int{0}, 0, []int{1}, 1, []int{1}},
 	{[]int{1, 2, 3, 0, 0, 0}, 3, []int{2, 5, 6}, 3, []int{1, 2, 2, 3, 5, 6}},
 }
 
-func TestMere(t *testing.T) {
+func TestSuccess(t *testing.T) {
 	for _, tt := range tests {
 		merge(tt.in1, tt.in2, tt.in3, tt.in4)
 		if !reflect.DeepEqual(tt.in1, tt.want) {
