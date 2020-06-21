@@ -1,6 +1,7 @@
 package main
 
 import (
+	"sort"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -28,4 +29,20 @@ func (x *ListNode) Equal(y *ListNode) bool {
 		return false
 	}
 	return x.Val == y.Val
+}
+
+func buildList(s []int) *ListNode {
+	var result *ListNode
+	var before *ListNode
+
+	sort.Sort(sort.Reverse(sort.IntSlice(s)))
+	for _, v := range s {
+		result = &ListNode{Val: v}
+		if before != nil {
+			result.Next = before
+		}
+		before = result
+	}
+
+	return result
 }
