@@ -1,18 +1,26 @@
 package main
 
 func findDisappearedNumbers(nums []int) []int {
-	dict := make(map[int]bool, len(nums))
-	missing := []int{}
+	for i := 0; i < len(nums); i++ {
+		newIndex := abs(nums[i]) - 1
 
-	for _, n := range nums {
-		dict[n] = true
-	}
-
-	for i := 1; i < len(nums)+1; i++ {
-		if _, found := dict[i]; !found {
-			missing = append(missing, i)
+		if nums[newIndex] > 0 {
+			nums[newIndex] *= -1
 		}
 	}
 
-	return missing
+	result := []int{}
+	for i := 1; i <= len(nums); i++ {
+		if nums[i-1] > 0 {
+			result = append(result, i)
+		}
+	}
+	return result
+}
+
+func abs(x int) int {
+	if x < 0 {
+		return x * -1
+	}
+	return x
 }
