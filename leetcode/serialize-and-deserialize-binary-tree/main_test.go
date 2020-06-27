@@ -18,7 +18,7 @@ func TestSuccess(t *testing.T) {
 	obj := Constructor()
 
 	data := obj.serialize(root)
-	expected := "1,2,null,null,3,4,null,null,5,null,null,"
+	expected := "1,2,n,n,3,4,n,n,5,n,n,"
 	if data != expected {
 		t.Fatalf("got %v, want %v", data, expected)
 	}
