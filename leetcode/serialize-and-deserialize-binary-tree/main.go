@@ -21,19 +21,19 @@ func Constructor() Codec {
 }
 
 func (this *Codec) serialize(root *TreeNode) string {
-	return this.rserialize(root, "")
+	str := ""
+	this.rserialize(root, &str)
+	return str
 }
 
-func (this *Codec) rserialize(node *TreeNode, str string) string {
+func (this *Codec) rserialize(node *TreeNode, str *string) {
 	if node == nil {
-		str += "null,"
+		*str += "null,"
 	} else {
-		str += fmt.Sprintf("%d,", node.Val)
-		str = this.rserialize(node.Left, str)
-		str = this.rserialize(node.Right, str)
+		*str += fmt.Sprintf("%d,", node.Val)
+		this.rserialize(node.Left, str)
+		this.rserialize(node.Right, str)
 	}
-
-	return str
 }
 
 func (this *Codec) deserialize(data string) *TreeNode {
