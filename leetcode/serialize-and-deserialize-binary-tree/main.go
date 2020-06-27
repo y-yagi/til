@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
@@ -23,18 +22,18 @@ func Constructor() Codec {
 }
 
 func (this *Codec) serialize(root *TreeNode) string {
-	str := ""
-	this.rserialize(root, &str)
-	return str
+	this.values = []string{}
+	this.rserialize(root)
+	return strings.Join(this.values, ",")
 }
 
-func (this *Codec) rserialize(node *TreeNode, str *string) {
+func (this *Codec) rserialize(node *TreeNode) {
 	if node == nil {
-		*str += Null + ","
+		this.values = append(this.values, Null)
 	} else {
-		*str += fmt.Sprintf("%d,", node.Val)
-		this.rserialize(node.Left, str)
-		this.rserialize(node.Right, str)
+		this.values = append(this.values, strconv.Itoa(node.Val))
+		this.rserialize(node.Left)
+		this.rserialize(node.Right)
 	}
 }
 
