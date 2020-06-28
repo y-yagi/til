@@ -1,30 +1,25 @@
 package main
 
 func getRow(rowIndex int) []int {
-	triangle := generate(rowIndex + 1)
-	return triangle[rowIndex]
+	return generate(1, rowIndex+1, []int{1})
 }
 
-func generate(numRows int) [][]int {
-	if numRows == 0 {
-		return [][]int{}
+func generate(index, rowIndex int, before []int) []int {
+	if index == rowIndex {
+		return before
 	}
 
-	answer := [][]int{[]int{1}}
-
-	for i := 1; i < numRows; i++ {
-		tmp := []int{}
-		before := answer[i-1]
-		for j := 0; j < i+1; j++ {
-			v := 0
-			if j == 0 || j >= len(before) {
-				v = 1
-			} else {
-				v = before[j-1] + before[j]
-			}
-			tmp = append(tmp, v)
+	row := make([]int, index+1)
+	for i := 0; i <= index; i++ {
+		if i == 0 {
+			row[i] = before[0]
+		} else if i == index {
+			row[i] = before[index-1]
+		} else {
+			row[i] = before[i-1] + before[i]
 		}
-		answer = append(answer, tmp)
 	}
-	return answer
+
+	index++
+	return generate(index, rowIndex, row)
 }
