@@ -17,24 +17,26 @@ func Constructor() MinStack {
 }
 
 func (m *MinStack) Push(x int) {
-	m.stack = append([]int{x}, m.stack...)
-	if len(m.minStack) == 0 || x <= m.minStack[0] {
-		m.minStack = append([]int{x}, m.minStack...)
+	m.stack = append(m.stack, x)
+	if len(m.minStack) == 0 || x <= m.minStack[len(m.minStack)-1] {
+		m.minStack = append(m.minStack, x)
 	}
 }
 
 func (m *MinStack) Pop() {
 	var x int
-	x, m.stack = m.stack[0], m.stack[1:]
-	if x == m.minStack[0] {
-		m.minStack = m.minStack[1:]
+	l := len(m.stack)
+	minl := len(m.minStack)
+	x, m.stack = m.stack[l-1], m.stack[:l-1]
+	if x == m.minStack[minl-1] {
+		m.minStack = m.minStack[:minl-1]
 	}
 }
 
 func (m *MinStack) Top() int {
-	return m.stack[0]
+	return m.stack[len(m.stack)-1]
 }
 
 func (m *MinStack) GetMin() int {
-	return m.minStack[0]
+	return m.minStack[len(m.minStack)-1]
 }
