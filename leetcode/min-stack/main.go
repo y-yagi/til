@@ -1,51 +1,40 @@
 package main
 
-import "sort"
+import (
+	"math"
+)
 
-const maxUint = ^uint(0)
-const maxInt = int(maxUint >> 1)
+const maxInt = math.MaxInt64
 
 type MinStack struct {
-	values []int
-	min    int
+	stack    []int
+	minStack []int
 }
 
 func Constructor() MinStack {
-	values := []int{}
-	m := &MinStack{values: values}
-	m.min = maxInt
+	m := &MinStack{}
 	return *m
 }
 
 func (m *MinStack) Push(x int) {
-	m.values = append([]int{x}, m.values...)
-	if x < m.min {
-		m.min = x
+	m.stack = append([]int{x}, m.stack...)
+	if len(m.minStack) == 0 || x <= m.minStack[0] {
+		m.minStack = append([]int{x}, m.minStack...)
 	}
 }
 
 func (m *MinStack) Pop() {
-	if len(m.values) == 0 {
-		return
-	}
-
 	var x int
-	x, m.values = m.values[0], m.values[1:]
-
-	if len(m.values) == 0 {
-		m.min = maxInt
-	} else if x == m.min {
-		a := make([]int, len(m.values))
-		copy(a, m.values)
-		sort.Ints(a)
-		m.min = a[0]
+	x, m.stack = m.stack[0], m.stack[1:]
+	if x == m.minStack[0] {
+		m.minStack = m.minStack[1:]
 	}
 }
 
 func (m *MinStack) Top() int {
-	return m.values[0]
+	return m.stack[0]
 }
 
 func (m *MinStack) GetMin() int {
-	return m.min
+	return m.minStack[0]
 }
