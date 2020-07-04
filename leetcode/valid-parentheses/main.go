@@ -13,14 +13,14 @@ func isValid(s string) bool {
 			if len(stack) == 0 {
 				top = "#"
 			} else {
-				top, stack = stack[0], stack[1:]
+				top, stack = stack[len(stack)-1], stack[:len(stack)-1]
 			}
 
 			if top != dict[index] {
 				return false
 			}
 		} else {
-			stack = append([]string{index}, stack...)
+			stack = append(stack, index)
 		}
 	}
 
