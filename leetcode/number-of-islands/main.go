@@ -20,10 +20,10 @@ func walk(i, j int, byte [][]byte) int {
 	}
 	if byte[i][j] == '1' {
 		byte[i][j] = '2'
-		_ = walk(i-1, j, byte)
-		_ = walk(i+1, j, byte)
-		_ = walk(i, j-1, byte)
-		_ = walk(i, j+1, byte)
+		walk(i-1, j, byte)
+		walk(i+1, j, byte)
+		walk(i, j-1, byte)
+		walk(i, j+1, byte)
 		return 1
 	}
 	return 0
