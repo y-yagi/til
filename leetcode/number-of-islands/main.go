@@ -15,7 +15,7 @@ func numIslands(grid [][]byte) int {
 }
 
 func walk(i, j int, byte [][]byte) int {
-	if i < 0 || j < 0 || i >= len(byte) || j >= len(byte[0]) {
+	if i < 0 || j < 0 || i >= len(byte) || j >= len(byte[0]) || byte[i][j] == '2' {
 		return 0
 	}
 	if byte[i][j] == '1' {
