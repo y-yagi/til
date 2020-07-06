@@ -5,22 +5,23 @@ type MyStack struct {
 }
 
 func Constructor() MyStack {
-	m := &MyStack{values: []int{}}
+	m := &MyStack{}
 	return *m
 }
 
 func (this *MyStack) Push(x int) {
-	this.values = append([]int{x}, this.values...)
+	this.values = append(this.values, x)
 }
 
 func (this *MyStack) Pop() int {
 	x := 0
-	x, this.values = this.values[0], this.values[1:]
+	l := len(this.values) - 1
+	x, this.values = this.values[l], this.values[:l]
 	return x
 }
 
 func (this *MyStack) Top() int {
-	return this.values[0]
+	return this.values[len(this.values)-1]
 }
 
 func (this *MyStack) Empty() bool {
