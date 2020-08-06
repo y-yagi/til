@@ -7,9 +7,9 @@ var tests = []struct {
 	in2 string
 	out int
 }{
-	{"hello", "ll", 2},
-	{"aaaaa", "bba", -1},
 	{"mississippi", "issip", 4},
+	{"aaaaa", "bba", -1},
+	{"hello", "ll", 2},
 }
 
 func TestLongestCommonPrefix(t *testing.T) {
