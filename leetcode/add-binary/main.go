@@ -1,36 +1,47 @@
 package main
 
-import (
-	"strconv"
-)
-
 func addBinary(a string, b string) string {
-	i := len(a) - 1
-	j := len(b) - 1
-	sum := ""
-	carried := 0
+	n := len(a)
+	m := len(b)
+	if n < m {
+		return addBinary(b, a)
+	}
+	l := max(n, m)
 
-	for i >= 0 || j >= 0 {
-		now := carried
-		if i >= 0 {
-			z, _ := strconv.Atoi(string(a[i]))
-			now += z
-			i--
+	ans := []byte{}
+	carry := 0
+	j := m - 1
+
+	for i := l - 1; i > -1; i-- {
+		if a[i] == '1' {
+			carry++
 		}
-
-		if j >= 0 {
-			z, _ := strconv.Atoi(string(b[j]))
-			now += z
+		if j > -1 {
+			if b[j] == '1' {
+				carry++
+			}
 			j--
 		}
 
-		carried = now / 2
-		sum = strconv.Itoa(now%2) + sum
+		if carry%2 == 1 {
+			ans = append([]byte{'1'}, ans...)
+		} else {
+			ans = append([]byte{'0'}, ans...)
+		}
+		carry /= 2
 	}
 
-	if carried > 0 {
-		sum = strconv.Itoa(carried) + sum
+	if carry == 1 {
+		ans = append([]byte{'1'}, ans...)
 	}
 
-	return sum
+	return string(ans)
+}
+
+func max(i, j int) int {
+	if i > j {
+		return i
+	}
+
+	return j
 }

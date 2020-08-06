@@ -9,8 +9,8 @@ var tests = []struct {
 	in2  string
 	want string
 }{
-	{"11", "1", "100"},
 	{"1010", "1011", "10101"},
+	{"11", "1", "100"},
 }
 
 func TestAddBinary(t *testing.T) {
