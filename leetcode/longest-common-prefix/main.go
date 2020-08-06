@@ -1,30 +1,21 @@
 package main
 
+import "strings"
+
 func longestCommonPrefix(strs []string) string {
 	if len(strs) == 0 {
 		return ""
 	}
+	prefix := strs[0]
 
-	answer := ""
-	min := len(strs[0])
-
-	for _, str := range strs[0:] {
-		if len(str) < min {
-			min = len(str)
-		}
-	}
-
-out:
-	for i := 0; i < min; i++ {
-		index := string(strs[0][i])
-
-		for _, str := range strs[0:] {
-			if index != string(str[i]) {
-				break out
+	for i := 1; i < len(strs); i++ {
+		for strings.Index(strs[i], prefix) != 0 {
+			prefix = prefix[0 : len(prefix)-1]
+			if len(prefix) == 0 {
+				return ""
 			}
 		}
-		answer += index
 	}
 
-	return answer
+	return prefix
 }
