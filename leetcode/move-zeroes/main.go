@@ -1,18 +1,13 @@
 package main
 
 func moveZeroes(nums []int) {
-	l := len(nums)
-	zeros := 0
-	for i := 0; i < l; i++ {
-		if nums[i] == 0 {
-			nums = append(nums[:i], nums[i+1:]...)
-			zeros++
-			i--
-			l--
+	i := 0
+	for j := 0; j < len(nums); j++ {
+		if nums[j] != 0 {
+			t := nums[i]
+			nums[i] = nums[j]
+			nums[j] = t
+			i++
 		}
-	}
-
-	for i := 0; i < zeros; i++ {
-		nums = append(nums, 0)
 	}
 }
