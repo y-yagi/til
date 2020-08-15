@@ -1,31 +1,19 @@
 package main
 
 func longestPalindrome(s string) int {
-	dict := make(map[byte]int, len(s))
-	center := false
-	answer := 0
-
-	for i := 0; i < len(s); i++ {
-		dict[s[i]]++
+	count := make([]int, 128)
+	for _, b := range s {
+		index := b - '0'
+		count[index]++
 	}
 
-	for _, v := range dict {
-		if v%2 == 0 {
-			answer += v
-			continue
-		}
-
-		if v > 2 {
-			answer += v - 1
-			v = 1
-		}
-
-		if v == 1 && !center {
-			answer += v
-			center = true
-			continue
+	ans := 0
+	for _, v := range count {
+		ans += v / 2 * 2
+		if ans%2 == 0 && v%2 == 1 {
+			ans++
 		}
 	}
 
-	return answer
+	return ans
 }
