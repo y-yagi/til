@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func sortArrayByParity(A []int) []int {
 	i := 0
 	j := len(A) - 1
@@ -28,13 +26,4 @@ func sortArrayByParity(A []int) []int {
 	}
 
 	return A
-}
-
-func d(a ...interface{}) {
-	format := ""
-	for _, _ = range a {
-		format += "%v, "
-	}
-	format += "\n"
-	fmt.Printf(format, a...)
 }
