@@ -2,18 +2,21 @@ package main
 
 import "fmt"
 
+const fizz = "Fizz"
+const buzz = "Buzz"
+
 func fizzBuzz(n int) []string {
-	a := []string{}
+	a := make([]string, n)
 
 	for i := 1; i <= n; i++ {
 		if i%15 == 0 {
-			a = append(a, "FizzBuzz")
+			a[i-1] = fizz + buzz
 		} else if i%5 == 0 {
-			a = append(a, "Buzz")
+			a[i-1] = buzz
 		} else if i%3 == 0 {
-			a = append(a, "Fizz")
+			a[i-1] = fizz
 		} else {
-			a = append(a, fmt.Sprintf("%d", i))
+			a[i-1] = fmt.Sprintf("%d", i)
 		}
 	}
 
