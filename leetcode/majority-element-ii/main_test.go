@@ -9,6 +9,7 @@ var tests = []struct {
 	in1  []int
 	want []int
 }{
+	{[]int{1, 2}, []int{1, 2}},
 	{[]int{3, 2, 3}, []int{3}},
 	{[]int{1, 1, 1, 3, 3, 2, 2, 2}, []int{1, 2}},
 }
