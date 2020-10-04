@@ -1,18 +1,5 @@
 package main
 
-import (
-	"fmt"
-)
-
-func d(a ...interface{}) {
-	format := ""
-	for _, _ = range a {
-		format += "%v, "
-	}
-	format += "\n"
-	fmt.Printf(format, a...)
-}
-
 func findPairs(nums []int, k int) int {
 	dict, count := make(map[int]int), 0
 
@@ -36,6 +23,5 @@ func findPairs(nums []int, k int) int {
 		}
 	}
 
-	d(dict)
 	return count
 }
