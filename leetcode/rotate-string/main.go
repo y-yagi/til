@@ -1,32 +1,38 @@
 package main
 
 func rotateString(A string, B string) bool {
-	if len(A) != len(B) {
+	N := len(A)
+	if N != len(B) {
 		return false
 	}
-
-	if len(A) == 0 {
+	if N == 0 {
 		return true
 	}
 
-	c := A[0]
-	for i := 0; i < len(B); i++ {
-		if B[i] == c {
-			bi := i + 1
-			ai := 1
-			for ; ai < len(A); ai++ {
-				if bi >= len(B) {
-					bi = 0
-				}
-				if B[bi] != A[ai] {
-					break
-				}
-				bi++
-			}
+	shifts := make([]int, N+1)
+	for i := 0; i < len(shifts); i++ {
+		shifts[i] = 1
+	}
 
-			if ai == len(A) {
-				return true
-			}
+	left := -1
+
+	for right := 0; right < N; right++ {
+		for left >= 0 && B[left] != B[right] {
+			left -= shifts[left]
+		}
+		shifts[right+1] = right - left
+		left++
+	}
+
+	matchLen := 0
+	A2 := A + A
+	for i := 0; i < len(A2); i++ {
+		for matchLen >= 0 && B[matchLen] != A2[i] {
+			matchLen -= shifts[matchLen]
+		}
+		matchLen++
+		if matchLen == N {
+			return true
 		}
 	}
 
