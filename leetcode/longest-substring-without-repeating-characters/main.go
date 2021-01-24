@@ -1,34 +1,26 @@
 package main
 
-import (
-	"fmt"
-)
+func lengthOfLongestSubstring(s string) int {
+	dict := map[byte]int{}
+	ans := 0
+	i := 0
+	j := 0
 
-func main() {
-	fmt.Printf("%d\n", lengthOfLongestSubstring("dvdf"))
-	fmt.Printf("%d\n", lengthOfLongestSubstring("abcabcbb"))
-	fmt.Printf("%d\n", lengthOfLongestSubstring("bbbbb"))
-	fmt.Printf("%d\n", lengthOfLongestSubstring("pwwkew"))
-	fmt.Printf("%d\n", lengthOfLongestSubstring("ohvhjdml"))
+	for ; j < len(s); j++ {
+		if pos, found := dict[s[j]]; found {
+			i = max(pos, i)
+		}
+		ans = max(ans, j-i+1)
+		dict[s[j]] = j + 1
+	}
+
+	return ans
 }
 
-func lengthOfLongestSubstring(s string) int {
-	dict := [128]bool{}
-	length, max := 0, 0
-	for i, j := 0, 0; i < len(s); i++ {
-		index := s[i]
-		if dict[index] {
-			for ; dict[index]; j++ {
-				length--
-				dict[s[j]] = false
-			}
-		}
-
-		dict[index] = true
-		length++
-		if length > max {
-			max = length
-		}
+func max(x, y int) int {
+	if x > y {
+		return x
 	}
-	return max
+
+	return y
 }
