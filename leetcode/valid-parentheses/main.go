@@ -1,27 +1,22 @@
 package main
 
 func isValid(s string) bool {
-	dict := map[string]string{")": "(", "}": "{", "]": "["}
-	stack := make([]string, 0)
+	dict := map[byte]byte{')': '(', '}': '{', ']': '['}
+	stack := []byte{}
 
 	for i := 0; i < len(s); i++ {
-		index := string(s[i])
-		_, found := dict[index]
-
-		if found {
-			top := ""
-			if len(stack) == 0 {
-				top = "#"
-			} else {
-				top, stack = stack[len(stack)-1], stack[:len(stack)-1]
-			}
-
-			if top != dict[index] {
-				return false
-			}
-		} else {
-			stack = append(stack, index)
+		if len(stack) == 0 {
+			stack = append(stack, s[i])
+			continue
 		}
+
+		pair, _ := dict[s[i]]
+		if stack[len(stack)-1] == pair {
+			stack = stack[:len(stack)-1]
+			continue
+		}
+
+		stack = append(stack, s[i])
 	}
 
 	return len(stack) == 0
