@@ -5,17 +5,18 @@ func convert(s string, numRows int) string {
 		return s
 	}
 
-	answer := ""
-	l := len(s)
+	ret := []byte{}
+	n := len(s)
 	cycleLen := 2*numRows - 2
 
 	for i := 0; i < numRows; i++ {
-		for j := 0; j+i < l; j += cycleLen {
-			answer += string(s[j+i])
-			if i != 0 && i != numRows-1 && j+cycleLen-i < l {
-				answer += string(s[j+cycleLen-i])
+		for j := 0; j+i < n; j += cycleLen {
+			ret = append(ret, s[i+j])
+			if i != 0 && i != numRows-1 && j+cycleLen-i < n {
+				ret = append(ret, s[j+cycleLen-i])
 			}
 		}
 	}
-	return answer
+
+	return string(ret)
 }
