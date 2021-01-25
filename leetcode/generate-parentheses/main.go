@@ -1,20 +1,21 @@
 package main
 
 func generateParenthesis(n int) []string {
-	return backtrace([]string{}, "", 0, 0, n)
+	ans := []string{}
+	backtrace(&ans, "", 0, 0, n)
+	return ans
 }
 
-func backtrace(patterns []string, cur string, open, close, max int) []string {
+func backtrace(ans *[]string, cur string, opened, closed, max int) {
 	if len(cur) == max*2 {
-		patterns = append(patterns, cur)
-		return patterns
+		*ans = append(*ans, cur)
+		return
 	}
 
-	if open < max {
-		patterns = backtrace(patterns, cur+"(", open+1, close, max)
+	if opened < max {
+		backtrace(ans, cur+"(", opened+1, closed, max)
 	}
-	if close < open {
-		patterns = backtrace(patterns, cur+")", open, close+1, max)
+	if closed < opened {
+		backtrace(ans, cur+")", opened, closed+1, max)
 	}
-	return patterns
 }
