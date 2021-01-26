@@ -1,19 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"math"
 	"strings"
 )
-
-func d(a ...interface{}) {
-	format := ""
-	for _, _ = range a {
-		format += "%v, "
-	}
-	format += "\n"
-	fmt.Printf(format, a...)
-}
 
 func myAtoi(str string) int {
 	str = strings.TrimSpace(str)
