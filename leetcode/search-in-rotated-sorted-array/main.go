@@ -1,37 +1,26 @@
 package main
 
 func search(nums []int, target int) int {
-	if len(nums) == 0 {
-		return -1
-	}
-
-	lo := 0
-	hi := len(nums) - 1
-
-	for lo < hi {
-		mid := (lo + hi) / 2
-		if nums[mid] > nums[hi] {
-			lo = mid + 1
+	start := 0
+	end := len(nums) - 1
+	for start <= end {
+		mid := start + (end-start)/2
+		if nums[mid] == target {
+			return mid
+		} else if nums[mid] >= nums[start] {
+			if target >= nums[start] && target < nums[mid] {
+				end = mid - 1
+			} else {
+				start = mid + 1
+			}
 		} else {
-			hi = mid
+			if target <= nums[end] && target > nums[mid] {
+				start = mid + 1
+			} else {
+				end = mid - 1
+			}
 		}
 	}
 
-	rot := lo
-	lo = 0
-	hi = len(nums) - 1
-
-	for lo <= hi {
-		mid := (lo + hi) / 2
-		realmid := (mid + rot) % len(nums)
-		if nums[realmid] == target {
-			return realmid
-		}
-		if nums[realmid] < target {
-			lo = mid + 1
-		} else {
-			hi = mid - 1
-		}
-	}
 	return -1
 }
