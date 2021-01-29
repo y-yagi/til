@@ -1,21 +1,21 @@
 package main
 
 func searchInsert(nums []int, target int) int {
-	start := len(nums) / 2
-	middle := nums[start]
-	answer := 0
+	left := 0
+	right := len(nums) - 1
 
-	if target < middle {
-		start = 0
-	}
-
-	for i := start; i < len(nums); i++ {
-		if nums[i] >= target {
-			answer = i
-			break
+	for left <= right {
+		mid := left + (right-left)/2
+		if nums[mid] == target {
+			return mid
 		}
-		answer = i + 1
+
+		if nums[mid] > target {
+			right = mid - 1
+		} else {
+			left = mid + 1
+		}
 	}
 
-	return answer
+	return left
 }
