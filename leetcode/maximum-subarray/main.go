@@ -1,23 +1,22 @@
 package main
 
 func maxSubArray(nums []int) int {
-	ans := nums[0]
-	cur := nums[0]
-	for p := 1; p < len(nums); p++ {
-		if cur >= 0 {
-			cur += nums[p]
-		} else {
-			cur = nums[p]
-		}
+	dp := make([]int, len(nums))
+	dp[0] = nums[0]
+	ans := dp[0]
 
-		ans = max(ans, cur)
+	for i := 1; i < len(nums); i++ {
+		dp[i] = max(dp[i-1]+nums[i], nums[i])
+		ans = max(ans, dp[i])
 	}
+
 	return ans
 }
 
-func max(a, b int) int {
-	if a >= b {
-		return a
+func max(x, y int) int {
+	if x > y {
+		return x
 	}
-	return b
+
+	return y
 }
