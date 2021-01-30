@@ -1,41 +1,22 @@
 package main
 
-import (
-	"fmt"
-	"sort"
-	"strings"
-)
-
-func d(a ...interface{}) {
-	format := ""
-	for _, _ = range a {
-		format += "%v, "
-	}
-	format += "\n"
-	fmt.Printf(format, a...)
-}
+import "sort"
 
 func groupAnagrams(strs []string) [][]string {
 	groups := [][]string{}
-	anagrams := map[string]int{}
+	dict := map[string]int{}
 
-	for _, str := range strs {
-		sortedStr := sortString(str)
-		if _, exist := anagrams[sortedStr]; exist {
-			index := anagrams[sortedStr]
-			groups[index] = append(groups[index], str)
+	for i := 0; i < len(strs); i++ {
+		b := []byte(strs[i])
+		sort.Slice(b, func(i int, j int) bool { return b[i] < b[j] })
+
+		if index, found := dict[string(b)]; found {
+			groups[index] = append(groups[index], strs[i])
 		} else {
-			groups = append(groups, []string{str})
-			anagrams[sortedStr] = len(groups) - 1
+			groups = append(groups, []string{strs[i]})
+			dict[string(b)] = len(groups) - 1
 		}
-
 	}
 
 	return groups
-}
-
-func sortString(w string) string {
-	s := strings.Split(w, "")
-	sort.Strings(s)
-	return strings.Join(s, "")
 }
