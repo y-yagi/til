@@ -6,22 +6,21 @@ type ListNode struct {
 }
 
 func deleteDuplicates(head *ListNode) *ListNode {
-	dummy := new(ListNode)
-	dummy.Next = head
-
-	prev, cur := dummy, dummy.Next
-
-	for cur != nil {
-		for cur.Next != nil && cur.Val == cur.Next.Val {
-			cur = cur.Next
-		}
-
-		if prev.Next != cur {
-			prev.Next = cur.Next
+	newHead := &ListNode{Next: head}
+	prev := newHead
+	curr := prev.Next
+	for curr != nil && curr.Next != nil {
+		if curr.Val == curr.Next.Val {
+			t := curr.Val
+			for curr != nil && curr.Val == t {
+				curr = curr.Next
+			}
+			prev.Next = curr
 		} else {
-			prev = prev.Next
+			prev = curr
+			curr = prev.Next
 		}
-		cur = prev.Next
 	}
-	return dummy.Next
+
+	return newHead.Next
 }
