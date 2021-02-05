@@ -7,15 +7,19 @@ type TreeNode struct {
 }
 
 func sortedArrayToBST(nums []int) *TreeNode {
-	if len(nums) == 0 {
+	return helper(0, len(nums)-1, nums)
+}
+
+func helper(left, right int, nums []int) *TreeNode {
+	if left > right {
 		return nil
 	}
 
-	mid := len(nums) / 2
+	p := (left + right) / 2
 
-	root := &TreeNode{Val: nums[mid]}
-	root.Left = sortedArrayToBST(nums[:mid])
-	root.Right = sortedArrayToBST(nums[mid+1:])
-
+	// preorder traversal: node -> left -> right
+	root := &TreeNode{Val: nums[p]}
+	root.Left = helper(left, p-1, nums)
+	root.Right = helper(p+1, right, nums)
 	return root
 }
