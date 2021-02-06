@@ -1,20 +1,20 @@
 package main
 
+import "math"
+
 func maxProfit(prices []int) int {
 	if len(prices) < 2 {
 		return 0
 	}
 
-	profit := 0
-	min := prices[0]
-
-	for i := 1; i < len(prices); i++ {
+	min := math.MaxInt32
+	ans := 0
+	for i := 0; i < len(prices); i++ {
 		if prices[i] < min {
 			min = prices[i]
-		} else if (prices[i] - min) > profit {
-			profit = prices[i] - min
+		} else if prices[i]-min > ans {
+			ans = prices[i] - min
 		}
 	}
-
-	return profit
+	return ans
 }
