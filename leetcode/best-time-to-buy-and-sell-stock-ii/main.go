@@ -1,24 +1,12 @@
 package main
 
 func maxProfit(prices []int) int {
-	i := 0
-	valley := prices[0]
-	peak := prices[0]
-	profit := 0
-
-	for i < len(prices)-1 {
-		for i < len(prices)-1 && prices[i] >= prices[i+1] {
-			i++
+	ans := 0
+	for i := 1; i < len(prices); i++ {
+		if prices[i] > prices[i-1] {
+			ans += prices[i] - prices[i-1]
 		}
-		valley = prices[i]
-
-		for i < len(prices)-1 && prices[i] <= prices[i+1] {
-			i++
-		}
-		peak = prices[i]
-
-		profit += peak - valley
 	}
 
-	return profit
+	return ans
 }
