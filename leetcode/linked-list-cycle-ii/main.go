@@ -6,22 +6,16 @@ type ListNode struct {
 }
 
 func detectCycle(head *ListNode) *ListNode {
-	if head == nil || head.Next == nil {
-		return nil
-	}
-	fast := head
-	slow := head
+	visited := map[*ListNode]bool{}
 
-	for fast.Next != nil && fast.Next.Next != nil {
-		fast = fast.Next.Next
-		slow = slow.Next
-		if fast == slow {
-			for head != slow {
-				head = head.Next
-				slow = slow.Next
-			}
+	for head != nil {
+		if _, found := visited[head]; found {
 			return head
 		}
+
+		visited[head] = true
+		head = head.Next
 	}
+
 	return nil
 }
