@@ -6,14 +6,14 @@ func wordBreak(s string, wordDict []string) bool {
 		dict[str] = true
 	}
 
-	wordStart := make([]bool, len(s)+1)
-	wordStart[0] = true
-	for i := 1; i < len(wordStart); i++ {
+	dp := make([]bool, len(s)+1)
+	dp[0] = true
+	for i := 1; i < len(dp); i++ {
 		for j := i - 1; j >= 0; j-- {
-			if wordStart[j] && dict[s[j:i]] {
-				wordStart[i] = true
+			if dp[j] && dict[s[j:i]] {
+				dp[i] = true
 			}
 		}
 	}
-	return wordStart[len(s)]
+	return dp[len(s)]
 }
