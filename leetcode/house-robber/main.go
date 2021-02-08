@@ -1,11 +1,15 @@
 package main
 
 func rob(nums []int) int {
-	rob, norob := 0, 0
+	prevMax, currMax := 0, 0
 	for _, num := range nums {
-		rob, norob = num+norob, max(norob, rob)
+		t := currMax
+		// f(k) = max(f(k – 2) + Ak, f(k – 1))
+		currMax = max(prevMax+num, currMax)
+		prevMax = t
 	}
-	return max(norob, rob)
+
+	return currMax
 }
 
 func max(x, y int) int {
