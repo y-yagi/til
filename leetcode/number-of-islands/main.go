@@ -14,16 +14,16 @@ func numIslands(grid [][]byte) int {
 	return islands
 }
 
-func walk(i, j int, byte [][]byte) int {
-	if i < 0 || j < 0 || i >= len(byte) || j >= len(byte[0]) || byte[i][j] == '2' {
+func walk(i, j int, grid [][]byte) int {
+	if i < 0 || j < 0 || i >= len(grid) || j >= len(grid[0]) || grid[i][j] == '2' {
 		return 0
 	}
-	if byte[i][j] == '1' {
-		byte[i][j] = '2'
-		walk(i-1, j, byte)
-		walk(i+1, j, byte)
-		walk(i, j-1, byte)
-		walk(i, j+1, byte)
+	if grid[i][j] == '1' {
+		grid[i][j] = '2'
+		walk(i-1, j, grid)
+		walk(i+1, j, grid)
+		walk(i, j-1, grid)
+		walk(i, j+1, grid)
 		return 1
 	}
 	return 0
