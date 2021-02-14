@@ -1,14 +1,15 @@
 package main
 
+// change-making problem
 func coinChange(coins []int, amount int) int {
 	max := amount + 1
-	dp := make([]int, max)
+	dp := make([]int, amount+1)
 	for i := 0; i < len(dp); i++ {
 		dp[i] = max
 	}
-
-	// DP - Bottom up
 	dp[0] = 0
+
+	// DP - Bottom up. Check min count for all values.
 	for i := 1; i <= amount; i++ {
 		for j := 0; j < len(coins); j++ {
 			if coins[j] <= i {
