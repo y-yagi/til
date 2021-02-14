@@ -1,13 +1,15 @@
 package main
 
 func moveZeroes(nums []int) {
-	i := 0
-	for j := 0; j < len(nums); j++ {
-		if nums[j] != 0 {
-			t := nums[i]
-			nums[i] = nums[j]
-			nums[j] = t
-			i++
+	// All elements before the slow pointer (lastNonZeroFoundAt) are non-zeroes.
+	// All elements between the current and slow pointer are zeroes.
+	left := 0
+	for i := 0; i < len(nums); i++ {
+		if nums[i] != 0 {
+			t := nums[left]
+			nums[left] = nums[i]
+			nums[i] = t
+			left++
 		}
 	}
 }
