@@ -7,7 +7,8 @@ func lengthOfLIS(nums []int) int {
 
 	dp := make([]int, len(nums))
 	dp[0] = 1
-	maxans := 1
+	ans := 1
+
 	for i := 1; i < len(dp); i++ {
 		maxval := 0
 		for j := 0; j < i; j++ {
@@ -16,9 +17,10 @@ func lengthOfLIS(nums []int) int {
 			}
 		}
 		dp[i] = maxval + 1
-		maxans = max(maxans, dp[i])
+		ans = max(ans, dp[i])
 	}
-	return maxans
+
+	return ans
 }
 
 func max(x, y int) int {
