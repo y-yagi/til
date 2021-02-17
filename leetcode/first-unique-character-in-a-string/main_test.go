@@ -9,8 +9,8 @@ var tests = []struct {
 	in1  string
 	want int
 }{
-	{"leetcode", 0},
 	{"loveleetcode", 2},
+	{"leetcode", 0},
 }
 
 func TestValid(t *testing.T) {
