@@ -2,6 +2,7 @@ package main
 
 func subarraySum(nums []int, k int) int {
 	var count, sum int
+	// Keep count of occurrences of sum
 	dict := map[int]int{}
 	dict[0] = 1
 
