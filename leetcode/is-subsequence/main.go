@@ -1,17 +1,20 @@
 package main
 
 func isSubsequence(s string, t string) bool {
-	matched := 0
+	if len(s) == 0 {
+		return true
+	}
+
 	j := 0
-	for i := 0; i < len(s); i++ {
-		for ; j < len(t); j++ {
-			if s[i] == t[j] {
-				matched++
-				j++
-				break
+
+	for i := 0; i < len(t); i++ {
+		if t[i] == s[j] {
+			j++
+			if j == len(s) {
+				return true
 			}
 		}
 	}
 
-	return matched == len(s)
+	return false
 }
