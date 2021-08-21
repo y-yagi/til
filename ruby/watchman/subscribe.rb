@@ -8,8 +8,12 @@ sockname = RubyWatchman.load(
 raise unless $?.exitstatus.zero?
 
 UNIXSocket.open(sockname) do |socket|
-  root = Pathname.new("/path/to/directory").realpath.to_s
+  root = Pathname.new('/path/to/directory').realpath.to_s
+
   result = RubyWatchman.query(['subscribe', root, "mysubscription", { "fields" => ["name"], "expression" => ["allof", ["match", "*.rb"]] } ], socket)
+  raise result.inspect if result.include?("error")
+
+  result = RubyWatchman.query(['subscribe', root, "mysubscription", { "fields" => ["name"], "expression" => ["name", "application.html.erb"] } ], socket)
   raise result.inspect if result.include?("error")
 
   loop do
