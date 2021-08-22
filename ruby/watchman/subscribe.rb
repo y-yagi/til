@@ -13,11 +13,15 @@ UNIXSocket.open(sockname) do |socket|
   result = RubyWatchman.query(['subscribe', root, "mysubscription", { "fields" => ["name"], "expression" => ["allof", ["match", "*.rb"]] } ], socket)
   raise result.inspect if result.include?("error")
 
-  result = RubyWatchman.query(['subscribe', root, "mysubscription", { "fields" => ["name"], "expression" => ["name", "application.html.erb"] } ], socket)
+  result = RubyWatchman.query(['subscribe', root, "mysubscription", { "fields" => ["name"], "expression" => ["name", "views/layouts/application.html.erb", "wholename"] } ], socket)
   raise result.inspect if result.include?("error")
 
   loop do
-    msg = socket.recvmsg()[0]
-    pp RubyWatchman.load(msg)
+    begin
+      msg = socket.recvmsg()[0]
+      pp RubyWatchman.load(msg)
+    rescue => e
+      pp e
+    end
   end
 end
