@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	fmt.Printf("This is fox\n")
-	fmt.Printf("type in commands\n")
+	fmt.Printf("This is the Fox programming language!\n")
+	fmt.Printf("Feel free to type in commands\n")
 	repl.Start(os.Stdin, os.Stdout)
 }
