@@ -17,7 +17,7 @@ pub fn is_valid(s: String) -> bool {
             '{' => stack.push('}'),
             '(' => stack.push(')'),
             '[' => stack.push(']'),
-            '}'|')'|']' if i != stack.pop() => return false,
+            '}'|')'|']' if Some(i) != stack.pop() => return false,
             _ => (),
         }
     }
