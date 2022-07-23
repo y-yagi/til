@@ -27,7 +27,6 @@ impl Solution {
             max_freq_count = max(max_freq_count, freqs[(chars[right] as u32 - 'A' as u32) as usize]);
 
             while right - left + 1 - max_freq_count > k as usize {
-                freqs[(chars[left] as u32 - 'A' as u32) as usize] -= 1;
                 left += 1;
             }
 
