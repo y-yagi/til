@@ -1,6 +1,7 @@
 use notify::{Config, RecommendedWatcher, RecursiveMode, Watcher};
 use std::path::Path;
 use std::time::Duration;
+use std::thread;
 
 fn main() {
     let path = std::env::args()
@@ -22,7 +23,7 @@ fn watch<P: AsRef<Path>>(path: P) -> notify::Result<()> {
     ctrlc::set_handler(move || sig_tx.send(()).expect("could not send signal on channel."))
         .expect("error setting Ctrl-C handler");
 
-    loop {
+    let th = thread::spawn(move || loop {
         crossbeam_channel::select! {
             recv(watcher_rx) -> res => {
               match res {
@@ -39,8 +40,9 @@ fn watch<P: AsRef<Path>>(path: P) -> notify::Result<()> {
                 break
             }
         }
-    }
+    });
 
+    th.join().unwrap();
     println!("watch end");
     Ok(())
 }
