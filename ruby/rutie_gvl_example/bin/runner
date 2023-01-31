@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "rutie_gvl_example"
+
+raise "please specify a path to watch" if ARGV.length.zero?
+w = RutieExample.raw_watch(ARGV[0]) { |e| pp e }
+Signal.trap('INT') { Thread.new { exit! } }
+puts "watching start"
+
+sleep

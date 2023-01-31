@@ -1,0 +1,24 @@
+PATH
+  remote: .
+  specs:
+    rutie_ruby_gvl_example (0.1.0)
+      rutie
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    minitest (5.17.0)
+    rake (13.0.6)
+    rutie (0.0.4)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  bundler
+  minitest
+  rake
+  rutie_ruby_gvl_example!
+
+BUNDLED WITH
+   2.4.3
